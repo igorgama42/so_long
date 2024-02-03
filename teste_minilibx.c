@@ -11,25 +11,26 @@
 /* ************************************************************************** */
 
 #include "./minilibx_linux/mlx.h"
+#include <stdio.h>
 
-typedef struct s_data
-{
-	void	*img;
-	char	*addr;
-	int	bits_per_pixel;
-	int	line_length;
-	int	endian;
-}		t_data;
-
-int	main(void)
+typedef struct s_vars
 {
 	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
+	void	*win;
+}		t_vars;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 720, 360, "My game"); 
-	img.img = mlx_new_image(mlx, 720, 360);
-	mlx_string_put(mlx, mlx_win, 5, 25, 0x00ff0000, "Testando");
-	mlx_loop(mlx);
+int	key_hook(int keycode, t_vars *vars)
+{
+	printf("%c\n",keycode);
+	return (0);
+}
+
+int	main(void)
+{	
+	t_vars	vars;
+
+	vars.mlx = mlx_init();
+	vars.win = mlx_new_window(vars.mlx, 720, 360, "Hello World!");
+	mlx_key_hook(vars.win, key_hook, &vars);
+	mlx_loop(vars.mlx);
 }
