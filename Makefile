@@ -1,5 +1,14 @@
-# NAME
-NAME = so_long
+# OUTPUT
+OUTPUT = so_long
+
+# SOURCES
+SRCS =
+
+# SOURCES OBJECTS
+SRCS_OBJ = ${SRCS:.c=.o}
+
+# HEADER
+HDR =
 
 # COMPILER
 CC = cc
@@ -10,5 +19,5 @@ C_FLAGS = -Wall -Wextra -Werror
 # MLX_FLAGS
 M_FLAGS = -Lmlx -lmlx -framework OpenGL -framework Appkit -o $(NAME)
 
-%.o: %.c
-	$(CC) $(C_FLAGS) -I/usr/include -Imlx_linux -03 -c $< -o $@
+.c.o:
+	${CC} ${C_FLAGS} -I ${HDR} -Imlx_linux -03 -c $< -o $@
