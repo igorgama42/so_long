@@ -21,12 +21,19 @@ typedef struct s_vars
 
 int	key_hook(int keycode, t_vars *vars)
 {
-	printf("%c\n",keycode);
+	static int	i;
+
+	(void) vars;
+	if (keycode == 'w' || keycode == 'a' || keycode == 's' || keycode == 'd')
+	{
+		printf ("Counter: %i\n", ++i);
+		printf("%c\n", keycode);
+	}
 	return (0);
 }
 
 int	main(void)
-{	
+{
 	t_vars	vars;
 
 	vars.mlx = mlx_init();
