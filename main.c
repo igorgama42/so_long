@@ -6,7 +6,7 @@
 /*   By: igama <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 23:19:39 by igama             #+#    #+#             */
-/*   Updated: 2024/02/02 11:09:26 by igama            ###   ########.fr       */
+/*   Updated: 2024/02/06 20:18:28 by igama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(void)
 	t_data	img;
 
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 720, 360, "My game"); 
+	mlx_win = mlx_new_window(mlx, 720, 360, "My game");
 	img.img = mlx_new_image(mlx, 720, 360);
 	mlx_string_put(mlx, mlx_win, 5, 25, 0x00ff0000, "Testando");
 	mlx_loop(mlx);

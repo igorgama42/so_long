@@ -6,7 +6,7 @@
 
 - Minilibx Functions 
   * How to move with W, A, S, D, and moving in different directions;
-  * Display the number of moves on the shell terminal;
+  X Display the number of moves on the shell terminal;
   * How to display an image on the window;
   * Window smoothering management;
   * "ESC" and the "X" must close the window;
@@ -27,12 +27,6 @@
 
 - Better study of the Makefile;
 
-Objective: 
-
-
-
-
-
-
+Objective:
 
 */
