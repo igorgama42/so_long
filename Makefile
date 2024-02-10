@@ -1,5 +1,5 @@
-# OUTPUT
-OUTPUT = so_long
+# NAME
+NAME = so_long
 
 # SOURCES
 SRCS = teste_minilibx.c
@@ -8,10 +8,10 @@ SRCS = teste_minilibx.c
 SRCS_OBJS = ${SRCS:.c=.o}
 
 # HEADER
-HDR = /minilibx_linux/mlx.h
+HDR = so_long.h
 
 # COMPILER
-CC = cc
+CC = gcc
 
 # COMPILER FLAGS
 C_FLAGS = -Wall -Wextra -Werror
@@ -20,21 +20,21 @@ C_FLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 # MLX_FLAGS
-M_FLAGS = -lX11 -lXext -lmlx #minilibx_linux/libmlx.a -framework OpenGL -framework Appkit -o $(NAME)
+M_FLAGS = -lX11 -lXext ./minilibx_linux/libmlx.a #minilibx_linux/libmlx.a -framework OpenGL -framework Appkit -o $(NAME)
 
-%.o: %.c
-	${CC} ${C_FLAGS} -I ${HDR} -Imlx_linux -03 -c $< -o $@
+.c.o:
+	${CC} ${C_FLAGS} -c $< -o $@ $(<:.c=.o)
 
-all : ${OUTPUT}
+all : ${NAME}
 
-${OUTPUT} : ${SRCS_OBJS}
+${NAME} : ${SRCS_OBJS} 
 	${CC} ${C_FLAGS} -o $@ $^
 
 clean: 
 	${RM} ${SRCS_OBJS}
 
 fclean: clean
-	${RM} ${OUTPUT}
+	${RM} ${NAME}
 
 re: fclean all
 
