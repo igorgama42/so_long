@@ -1,5 +1,7 @@
 /*
- /\Things to learn:
+   /\Things to learn:
+
+   -> X == DONE!
 
 - Math Library
   * Study the necessary functions (Soon it will have more things here);
@@ -25,7 +27,8 @@
 - Map Validation
   * How to know where the things are (Walls, collectibles, etc);
 
-- Better study of the Makefile;
+- Make the Makefile;
+  X Do a Makefile for the So_Long project
 
 Objective:
 

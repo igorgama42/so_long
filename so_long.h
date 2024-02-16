@@ -16,12 +16,19 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct s_vars
+typedef struct s_map
 {
-	void	*mlx;
-	void	*win;
-}		t_vars;
+	int	size;
+}		t_map;
 
-int	keyhook(int keycode, t_vars *vars);
+typedef struct s_data
+{
+	void	*mlx_ptr; // MLX POINTER
+	void	*win_ptr; // MLX WINDOW POINTER
+	void	*textures[5]; // MLX IMAGE POINTERS (ON THE STACK)
+	t_map	*map; // MAP POINTER (CONTAINS MAP DETAILS - PREFERABLY KEPT ON THE STACK)
+}		t_data;
+
+int	keyhook(int keycode, t_data *vars);
 
 #endif

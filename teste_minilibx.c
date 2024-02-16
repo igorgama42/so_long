@@ -1,38 +1,49 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   teste_minilibx.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: igama <marvin@42.fr>                       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 23:19:39 by igama             #+#    #+#             */
-/*   Updated: 2024/02/08 10:41:39 by igama            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "./minilibx_linux/mlx.h"
-#include "so_long.h"
+#include "minilibx_linux/mlx.h"
+#include <stdlib.h>
 #include <stdio.h>
+#include <X11/X.h>
+#include <X11/keysym.h>
 
-int	key_hook(int keycode, t_vars *vars)
+typedef struct s_data
 {
-	static int	i;
+	void *mlx_ptr;
+	void *win_ptr;
+}	t_data;
 
-	(void) vars;
-	if (keycode == 'w' || keycode == 'a' || keycode == 's' || keycode == 'd')
-	{
-		printf ("Counter: %i\n", ++i);
-		printf("Key Pressed: %c\n", keycode);
-	}
+int	on_destroy(t_data *data)
+{
+	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	mlx_destroy_display(data->mlx_ptr);
+	free(data->mlx_ptr);
+	exit(0);
+	return (0);
+}
+
+int	on_keypress(int keysym, t_data *data)
+{
+	(void)data;
+	printf("Pressed key: %d\\n", keysym);
 	return (0);
 }
 
 int	main(void)
 {
-	t_vars	vars;
+	t_data	data;
 
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, 720, 360, "First Screen");
-	mlx_key_hook(vars.win, key_hook, &vars);
-	mlx_loop(vars.mlx);
+	data.mlx_ptr = mlx_init();
+	if (!data.mlx_ptr)
+		return (1);
+	data.win_ptr = mlx_new_window(data.mlx_ptr, 600, 400, "HI:)");
+	if (!data.win_ptr)
+		return (free(data.mlx_ptr), 1);
+
+	// Register key release hook
+	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, &data);
+
+	// Registre destroy hook
+	mlx_hook(data.win_ptr, DestroyNotify, StructureNotifyMask, &on_keypress, &data);
+
+	// Loop over the MLX pointer
+	mlx_loop(data.mlx_ptr);
+	return (0);
 }

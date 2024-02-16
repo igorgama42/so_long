@@ -1,42 +1,55 @@
 # NAME
 NAME = so_long
 
+# X11 AND MLX HEADER FILES
+INCLUDES = -I/usr/include -Imlx
+
+# MINILIBX PATH
+MINILIBX_PATH = minilibx_linux
+
+# MINILIBX
+MINILIBX = ${MINILIBX_PATH}/libmlx.a
+
 # SOURCES
-SRCS = teste_minilibx.c
+SOURCES = main.c
 
 # SOURCES OBJECTS
-SRCS_OBJS = ${SRCS:.c=.o}
+OBJS = ${SOURCES:.c=.o}
 
 # HEADER
 HDR = so_long.h
 
 # COMPILER
-CC = gcc
+CC = clang
 
 # COMPILER FLAGS
 C_FLAGS = -Wall -Wextra -Werror
 
+# MLX FLAGS
+MLX_FLAGS = -lX11 -lXext -lmlx -Lmlx -L/usr/lib/x11
+
 # REMOVER
 RM = rm -f
 
-# MLX_FLAGS
-M_FLAGS = -lX11 -lXext ./minilibx_linux/libmlx.a #minilibx_linux/libmlx.a -framework OpenGL -framework Appkit -o $(NAME)
-
 .c.o:
-	${CC} ${C_FLAGS} -c $< -o $@ $(<:.c=.o)
+	${CC} ${C_FLAGS} -c -o $@ $< ${INCLUDES}
 
 all : ${NAME}
 
-${NAME} : ${SRCS_OBJS} 
-	${CC} ${C_FLAGS} -o $@ $^
+${NAME} : ${MINILIBX} ${OBJS} ${HEADER}
+	${CC} ${C_FLAGS} ${MLX_FLAGS} ${OBJS} ${MINILIBX} -o ${NAME}
+
+${MINILIBX}:
+	${MAKE} -C ${MINILIBX_PATH}
 
 clean: 
-	${RM} ${SRCS_OBJS}
+	${MAKE} -C ${MINILIBX_PATH} clean
+	${RM} ${OBJS}
 
 fclean: clean
 	${RM} ${NAME}
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re minilibx
 
