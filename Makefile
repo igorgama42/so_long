@@ -26,7 +26,7 @@ CC = clang
 C_FLAGS = -Wall -Wextra -Werror
 
 # MLX FLAGS
-MLX_FLAGS = -lX11 -lXext -lmlx -Lmlx -L/usr/lib/x11
+MLX_FLAGS = -lbsd -lX11 -lXext -lmlx
 
 # REMOVER
 RM = rm -f

@@ -6,7 +6,7 @@
 /*   By: igama <igama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:10:48 by igama             #+#    #+#             */
-/*   Updated: 2024/02/08 11:11:35 by igama            ###   ########.fr       */
+/*   Updated: 2024/02/16 07:54:30 by igama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 typedef struct s_map
 {
