@@ -6,30 +6,53 @@
 /*   By: igama <igama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:10:48 by igama             #+#    #+#             */
-/*   Updated: 2024/02/16 07:54:30 by igama            ###   ########.fr       */
+/*   Updated: 2024/02/28 15:03:12 by igama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include <unistd.h>
-# include <stdlib.h>
+# include "libraries/minilibx/mlx.h"
+# include "libraries/libft/libft.h"
 # include <stdio.h>
+# include <fcntl.h>
+# include <stdlib.h>
 
-typedef struct s_map
+typedef struct s_game
 {
-	int	size;
-}		t_map;
+	void	*mlx;
+	void	*win;
+	char	**map;
+	void	*space;
+	void	*wall;
+	void	*player;
+	void	*collect;
+	void	*exit;
+	int		map_w;
+	int		map_h;
+	int		img_w;
+	int		img_h;
+	int		n_collect;
+	int		n_player;
+	int		n_exit;
+	int		x_player;
+	int		y_player;
+	int		moves;
+	int		endgame;
+}			t_game;
 
-typedef struct s_data
-{
-	void	*mlx_ptr; // MLX POINTER
-	void	*win_ptr; // MLX WINDOW POINTER
-	void	*textures[5]; // MLX IMAGE POINTERS (ON THE STACK)
-	t_map	*map; // MAP POINTER (CONTAINS MAP DETAILS - PREFERABLY KEPT ON THE STACK)
-}		t_data;
-
-int	keyhook(int keycode, t_data *vars);
+void	game_initializer(t_game *game);
+void	gameplay(t_game *game);
+void	move_w(t_game *game);
+void	move_a(t_game *game);
+void	move_s(t_game *game);
+void	move_d(t_game *game);
+void	drawing_image(t_game *game, void *image, int x, int y);
+int		drawing_map(t_game *game);
+int		map_validator(t_game *game);
+char	**map_maker(char *path);
+void	free_map(char **map);
+int		game_closer(t_game *game);
 
 #endif

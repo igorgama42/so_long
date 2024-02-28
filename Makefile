@@ -1,55 +1,61 @@
-# NAME
-NAME = so_long
-
-# X11 AND MLX HEADER FILES
-INCLUDES = -I/usr/include -Imlx
-
 # MINILIBX PATH
-MINILIBX_PATH = minilibx_linux
+MINILIBX_PATH = ./libraries/minilibx
 
 # MINILIBX
-MINILIBX = ${MINILIBX_PATH}/libmlx.a
+MINILIBX	  = ${MINILIBX_PATH}/libmlx.a
 
-# SOURCES
-SOURCES = main.c
+# LIBFT PATH
+LIBFT_PATH		=	./libraries/libft
 
-# SOURCES OBJECTS
-OBJS = ${SOURCES:.c=.o}
+# LIBFT
+LIBFT			=	${LIBFT_PATH}/libft.a
 
-# HEADER
-HDR = so_long.h
+# SOURCE FILES
+SOURCES	 =	so_long.c game_initializer.c map_maker.c
+SOURCES +=  game_design.c image_changer.c map_validations.c
+SOURCES +=  gameplay.c game_closer.c
+
+# OBJECT FILES
+OBJECTS = $(SOURCES:.c=.o)
+
+# NAME OF THE PROGRAM
+NAME = so_long
 
 # COMPILER
 CC = clang
 
-# COMPILER FLAGS
-C_FLAGS = -Wall -Wextra -Werror
-
-# MLX FLAGS
-MLX_FLAGS = -lbsd -lX11 -lXext -lmlx
-
 # REMOVER
 RM = rm -f
 
+# COMPILER FLAGS
+CFLAGS = -Wall -Wextra -Werror
+
+# MINILIBX FLAGS
+MLX_FLAGS = -L. -lXext -L. -lX11
+
 .c.o:
-	${CC} ${C_FLAGS} -c -o $@ $< ${INCLUDES}
+				$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
-all : ${NAME}
+all:			$(NAME)
 
-${NAME} : ${MINILIBX} ${OBJS} ${HEADER}
-	${CC} ${C_FLAGS} ${MLX_FLAGS} ${OBJS} ${MINILIBX} -o ${NAME}
+$(NAME):		$(LIBFT) $(MINILIBX) $(OBJECTS) so_long.h
+				$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) $(MINILIBX) $(MLX_FLAGS) -o $(NAME)
 
-${MINILIBX}:
-	${MAKE} -C ${MINILIBX_PATH}
+$(LIBFT):
+				$(MAKE) -C $(LIBFT_PATH)
 
-clean: 
-	${MAKE} -C ${MINILIBX_PATH} clean
-	${RM} ${OBJS}
+$(MINILIBX):
+				$(MAKE) -C $(MINILIBX_PATH)
 
-fclean: clean
-	${RM} ${NAME}
+clean:
+				$(MAKE) -C $(LIBFT_PATH) clean
+				$(MAKE) -C $(MINILIBX_PATH) clean
+				$(RM) $(OBJECTS)
 
-re: fclean all
+fclean:			clean
+				$(MAKE) -C $(LIBFT_PATH) fclean
+				$(RM) $(NAME)
 
-.PHONY: all clean fclean re minilibx
+re:				fclean all
 
+.PHONY:			all clean fclean re libft
